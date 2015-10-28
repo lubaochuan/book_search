@@ -6,12 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by blu on 10/27/15.
  */
-public class Book {
+public class Book implements Serializable {
     private String openLibraryId;
     private String author;
     private String title;

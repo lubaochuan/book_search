@@ -1,5 +1,6 @@
 package org.createdtolearn.booksearch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -25,6 +28,7 @@ public class BookListActivity extends AppCompatActivity {
     private BookAdapter bookAdapter;
     private BookClient client;
     private ProgressBar progress;
+    public static final String BOOK_DETAIL_KEY = "book";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,19 @@ public class BookListActivity extends AppCompatActivity {
         bookAdapter = new BookAdapter(this, aBooks);
         lvBooks.setAdapter(bookAdapter);
         progress = (ProgressBar) findViewById(R.id.progress);
+        setupBookSelectedListener();
+    }
+
+    public void setupBookSelectedListener() {
+        lvBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Launch the detail view passing book as an extra
+                Intent intent = new Intent(BookListActivity.this, BookDetailActivity.class);
+                intent.putExtra(BOOK_DETAIL_KEY, bookAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
